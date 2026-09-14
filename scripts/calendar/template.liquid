@@ -1,0 +1,48 @@
+{% assign source = source_1 %}
+<div class="{{extension.css_classes}}">
+  <div class="view view--full">
+    <div class="layout layout--col gap--space-between">
+      <div class="title_bar">
+        <span class="title">Week of {{ source.range_start }}</span>
+        <span class="instance">Updated {{ source.generated_at | slice: 11, 5 }}</span>
+      </div>
+
+      <table style="width:100%; border-collapse:collapse; table-layout:fixed; height:100%; color:#000;">
+        <thead>
+          <tr>
+            {% for day in source.days %}
+              <th style="border:1px solid #000; padding:6px 4px; font-size:20px; {% if day.is_today %}background:#000; color:#fff;{% endif %}">
+                {{ day.weekday }} {{ day.day }}
+              </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% for day in source.days %}
+              <td style="border:1px solid #000; padding:5px; vertical-align:top; font-size:15px; line-height:1.2; color:#000; {% if day.is_today %}background:#f0f0f0;{% endif %}">
+                {% for event in day.events limit:source.config.events_per_day %}
+                  <div style="margin-bottom:6px;">
+                    {% if event.all_day %}
+                      <strong style="font-size:16px;">all day</strong>
+                    {% else %}
+                      <strong style="font-size:16px;">{{ event.start_time }}</strong>
+                    {% endif %}
+                    <div style="overflow:hidden; text-overflow:ellipsis;">{{ event.title | truncate: source.config.title_length }}</div>
+                    {% if event.calendar %}<div style="font-size:12px; color:#666;">{{ event.calendar | truncate: source.config.calendar_label_length }}</div>{% endif %}
+                  </div>
+                {% endfor %}
+                {% if day.events.size > source.config.events_per_day %}
+                  <div style="font-style:italic; font-size:13px;">+{{ day.events.size | minus: source.config.events_per_day }} more</div>
+                {% endif %}
+                {% if day.events.size == 0 %}
+                  <div style="color:#999;">&nbsp;</div>
+                {% endif %}
+              </td>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
