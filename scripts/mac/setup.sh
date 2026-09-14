@@ -20,7 +20,7 @@ fi
 
 # Install dependencies
 printf "%s\n" "Installing Homebrew dependencies..."
-brew install rbenv ruby-build overmind imagemagick valkey postgresql@17 node
+brew install rbenv ruby-build overmind imagemagick valkey postgresql@18 node
 brew install --cask google-chrome
 
 # Set up rbenv in current shell
@@ -43,7 +43,7 @@ rbenv rehash
 
 # Start services
 printf "%s\n" "Starting services..."
-brew services start postgresql@17
+brew services start postgresql@18
 brew services start valkey
 
 printf "%s\n" "Waiting for PostgreSQL to be ready..."

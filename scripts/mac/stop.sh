@@ -13,7 +13,7 @@ if [[ -S ./.overmind.sock ]]; then
 fi
 
 printf "%s\n" "Stopping services..."
-brew services stop postgresql@17
+brew services stop postgresql@18
 brew services stop valkey
 
 printf "%s\n" "Stopped."
